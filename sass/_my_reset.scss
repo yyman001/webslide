@@ -1,0 +1,30 @@
+﻿@charset "utf-8";
+html,
+body{
+  //height: 100%;
+  width: 100%;
+  //overflow: hidden;
+}
+
+body,h1,h2,h3,h4,h5,p,ul,li,dl,dt,dd{
+  margin: 0;
+  padding: 0;
+}
+
+body, button, input, select, textarea { font-family: 'helvetica neue',arial,'hiragino sans gb',stheiti,'wenquanyi micro hei',\5FAE\8F6F\96C5\9ED1,\5B8B\4F53,sans-serif; }
+a{
+  text-decoration: none;
+  outline: 0;
+}
+a, img {
+  -webkit-touch-callout: none;
+}
+li{
+  list-style: none;
+}
+img{
+  display: block;
+  border: 0 none;
+  max-width: 100%;
+}
+input,button{-webkit-appearance:none;}
