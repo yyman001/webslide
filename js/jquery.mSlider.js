@@ -105,13 +105,15 @@
         console.log(winW, winH);
         return this.each(function () {
             //var treeDate = {};
-
+            var $this = $(this);
             this.style.width = winW + 'px';
             this.style.height = winH + 'px';
 
-            var $mSlider__baseSliders = $('.mSlider__baseSlider');
+            var $mSlider__spa = $this.find('.mSlider__spa');
 
-            var $mSlider__scroll = $('.mSlider__scroll');
+            //var $mSlider__baseSliders = $('.mSlider__baseSlider');
+
+            //var $mSlider__scroll = $('.mSlider__scroll');
 
             var treeDate = {
                 x: 0, //列
@@ -123,32 +125,47 @@
                 }, //[行,列] 记录当前坐标系
                 actionIndex: 0,
                 //主体行
-                childrenFirstDom: [$mSlider__baseSliders.eq(0), $mSlider__baseSliders.eq(1), $mSlider__baseSliders.eq(2)], //子元素第一个元素 [上下切换的元素]
-                children: [{
-                    dom: [$mSlider__baseSliders.eq(0), $mSlider__scroll.eq(0)],
-                    length: -1,
-                    actionIndex: 0,
-                    dateType:'normal'    //左右切换为循环类型
-                }, {
-                    dom: [$mSlider__baseSliders.eq(1),$mSlider__scroll.eq(1),$mSlider__scroll.eq(2)],
-                    length: 0,
-                    actionIndex: 0,
-                    //dateType:'infinite'     //普通类型  切换到最顶边不能切换
-                    dateType:'normal'     //普通类型  切换到最顶边不能切换
-                }, {
-                    dom: [$mSlider__baseSliders.eq(2)],
-                    length: -1,
-                    actionIndex: 0,
-                    dateType:'normal'
-                }],
-                //childrenDom:[['$1,$2'],['$1']],
-                //childrenDom:[['$1,$2'],['$1']],
+                childrenFirstDom: [], //子元素第一个元素 [上下切换的元素]
+                children: [],
                 childrenDom:[],
                 infiniteArray:[], //存放
                 length: -1
             };
+
             ///init
-            treeDate.length = treeDate.childrenFirstDom.length;
+            //treeDate.length = treeDate.childrenFirstDom.length;
+
+            $($mSlider__spa).each(function(i,ele){
+                var _$this = $(this);
+                //treeDate.childrenFirstDom.push(_$this);
+                var $children = _$this.children();
+                var type = _$this.attr('datatype');
+                var object = {
+                    dom:[],
+                    actionIndex: 0,
+                    "dateType":"normal"
+                };
+
+                if(typeof type !== 'undefined' && type === 'infinite'){
+                    object.dateType = 'infinite'
+                }
+
+                $children.each(function(i2,ele2){
+                    if(i2 === 0){
+                        treeDate.childrenFirstDom.push($(ele2));
+                    }
+                    object.dom.push($(ele2));
+                    //console.log(treeDate.children[i]);
+                    //treeDate.children[i].push($(ele2));
+                });
+                //console.log(treeDate.children[i]);
+                treeDate.children.push(object)
+                //console.table(object)
+
+            });
+
+
+
 
             $.each(treeDate.children,function(i,ele){
                 //console.log(i, ele);
@@ -157,7 +174,8 @@
 
             });
 
-
+            treeDate.length = treeDate.childrenFirstDom.length;
+            console.table(treeDate);
 
             var $pre,$cur,$next;
 
