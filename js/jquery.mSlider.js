@@ -6,6 +6,10 @@
     $.fn.mSlider = function (opt) {
         var options = $.extend({
             nativeScroll:!0,
+            touchStart:function(){},
+            touchMove: function () {},
+            touchEnd: function () {},
+            touchCancel: function () {},
             activeClass: 'active', // Class to be added to highlight nav elements
             sectionSelector: 'scrollto', // Class of the section that is interconnected with nav links
             animDuration: 350, //
@@ -229,7 +233,6 @@
                     if(i2 === 0){
                         treeDate.childrenFirstDom.push($(ele2));
                     }
-                    console.log(ele2);
                     if($(ele2).hasClass('mSlider__scroll') && !options.nativeScroll){
                         try {
                             $(ele2).addClass('mSlider__scroll--iScrollPlug');
@@ -257,21 +260,16 @@
 
             treeDate.length = treeDate.childrenFirstDom.length;
 
-
-
-            console.table(treeDate);
             //启动插件滚动 阻止默认事件
             if(!options.nativeScroll){
                 document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
             }
             new AlloyFinger(this, {
                 distance:100,
-                touchStart: function (e) {},
-                touchMove: function (e) {
-                    //e.preventDefault();
-                },
-                touchEnd: function (e) {},
-                touchCancel: function (e) {},
+                touchStart: function (e) {options.touchStart(e);},
+                touchMove: function (e) {options.touchMove(e)},
+                touchEnd: function (e) {options.touchEnd(e)},
+                touchCancel: function (e) {options.touchCancel(e)},
                 swipe: function (evt) {
                     if(isAction){return;}
                     /*

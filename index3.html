@@ -179,6 +179,18 @@
 
     $('.mSlider').mSlider({
         nativeScroll:false, //  是否使用原生滚动 [默认 真 ]
+        touchStart:function(e){
+            console.log('touchStart');
+        },
+        touchMove: function (e) {
+            console.log('touchMove');
+        },
+        touchEnd: function (e) {
+            console.log('touchEnd');
+        },
+        touchCancel: function (e) {
+            console.log('touchCancel');
+        },
         before: function(object) {
 //            console.log(object);
             console.table(object);
