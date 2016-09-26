@@ -232,7 +232,7 @@
                     console.log(ele2);
                     if($(ele2).hasClass('mSlider__scroll') && !options.nativeScroll){
                         try {
-                            $(ele2).addClass('mSlider__iScrollPlug');
+                            $(ele2).addClass('mSlider__scroll--iScrollPlug');
                             new IScroll(ele2, {
                                 scrollbars: true,
                                 interactiveScrollbars: true,
