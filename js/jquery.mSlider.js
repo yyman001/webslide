@@ -357,14 +357,14 @@
 
                             if(type === 'infinite'){
                                 isAction = !0;
-                                if(treeDate.childrenDom[treeDate.y].length == 2){ //只有2个元素循环的时候
+                                //if(treeDate.childrenDom[treeDate.y].length == 2){ //只有2个元素循环的时候
                                     //$pre = $next;
                                     $pre = treeDate.childrenDom[treeDate.y][1];
                                     $cur = treeDate.childrenDom[treeDate.y][0];
-                                }else{
-                                    $pre = treeDate.childrenDom[treeDate.y][1];
-                                    $cur = treeDate.childrenDom[treeDate.y][0];
-                                }
+                                //}else{
+                                //    $pre = treeDate.childrenDom[treeDate.y][1];
+                                //    $cur = treeDate.childrenDom[treeDate.y][0];
+                                //}
 
                                 $next = treeDate.childrenDom[treeDate.y].pop();
                                 treeDate.childrenDom[treeDate.y].unshift($next);
