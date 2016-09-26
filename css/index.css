@@ -26,6 +26,7 @@ body { background-color: #f0f0f0; }
 
 .mSlider { position: relative; margin: 0 auto; max-width: 640px; height: 100%; overflow: hidden; }
 .mSlider__spa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+.mSlider__spa:first-child .mSlider__baseSlider { font-size: 100px; visibility: visible; z-index: 1; }
 .mSlider--action { visibility: visible; z-index: 1; }
 .mSlider__baseSlider, .mSlider__scroll { position: absolute; top: 0; left: 0; display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; width: 100%; height: 100%; overflow: hidden; visibility: hidden; z-index: -1; }
 .mSlider__baseSlider.visibility, .mSlider__scroll.visibility { visibility: visible; z-index: 1; }

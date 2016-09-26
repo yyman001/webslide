@@ -14,6 +14,11 @@
     left: 0;
     right: 0;
     bottom: 0;
+    &:first-child .mSlider__baseSlider{
+      font-size: 100px;
+      visibility: visible;
+      z-index: 1;
+    }
   }
 
 
