@@ -65,7 +65,6 @@
 <div class="mSlider">
 
     <div class="mSlider__spa" datatype="infinite">
-        <!--<div class="mSlider__baseSlider visibility" style="background-color: bisque;">-->
         <div class="mSlider__baseSlider" style="background-color: bisque;">
                 x=0
         </div>
@@ -139,44 +138,14 @@
 <!--<script type="text/javascript" src="js/index.js"></script>-->
 
 <script type="text/javascript">
-    /*
-    * 参考的数据结构
-    * */
-    /*var treeDate = {
-        x: 0, //列
-        y: 0, //行
-        location: [0, 0], //[行,列] 记录当前坐标系
-        actionIndex: 0,
-        childrenFirstDom: ['$1', '$2', '$3'], //子元素第一个元素 [上下切换的元素]
-        children: [{
-            dom: ['$1', '$2'],
-            length: 0,
-            actionIndex: 0,
-            dateType:'infinite'    //左右切换为循环类型
-        }, {
-            dom: ['$1'],
-            length: 0,
-            actionIndex: 0,
-            dateType:'normal'     //普通类型  切换到最顶边不能切换
-        }, {
-            dom: ['$1'],
-            length: 0,
-            actionIndex: 0,
-            dateType:'normal'
-        }],
-        childrenDom:[['$1,$2'],['$1']],
-        length:3
-
-    };
-*/
-
-
-
-
-
-
-    
-
+    /**
+     * 全局一个主构架实例
+     * 暂时不支持自定义动画和时间
+     * @function 遍历item为显示都的list对象
+     * @nativeScroll {真假} [ 页面滚动模式 (自带原生 / 插件扩展 )]
+     * @before {function} [切换前的函数,返回 object ]
+     * @after {function}  [切换后的函数,返回 object ]
+     */
 
     $('.mSlider').mSlider({
         nativeScroll:false, //  是否使用原生滚动 [默认 真 ]
@@ -193,23 +162,16 @@
             console.log('touchCancel');
         },
         before: function(object) {
-//            console.log(object);
             console.table(object);
+            console.log(object.$cur);  //当前
+            console.log(object.$next); //准备切换到的
         },
         after: function(object) {
-//            console.log(object);
             console.table(object);
+            console.log(object.$cur);  //当前
+            console.log(object.$prev);  //之前切换的元素
         }
     });
-
-//        new IScroll('.mSlider__scroll', {
-//        scrollbars: true,
-//        interactiveScrollbars: true,
-//        shrinkScrollbars: 'scale',
-//        fadeScrollbars: true,
-//        click:true});
-
-
 
 </script>
 </body>

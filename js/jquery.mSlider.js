@@ -206,6 +206,10 @@
 /**
  * mSlider 体位切换插件
  * 时间:2016/9/26
+ *  全局一个主构架实例
+ *  暂时不支持自定义动画和时间
+ *  页面滚动模式 [自带原生 | 插件扩展 ]
+ *  切换前后回调
  */
 ;(function(){
     'use strict';
@@ -414,7 +418,6 @@
         var IScrollState = !1;
         var failScrollElement = []; //记录初始化失败的 滚动元素
 
-        console.log(winW, winH);
         var $pre,$cur,$next;
         var treeDate = {
             x: 0, //列
