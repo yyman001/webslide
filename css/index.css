@@ -77,6 +77,16 @@ body {
       visibility: visible;
       z-index: 1; }
   .mSlider__scrollCont {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    -webkit-tap-highlight-color: transparent;
+    width: 100%;
+    transform: translateZ(0);
+    user-select: none;
+    text-size-adjust: none; }
+  .mSlider__scrollCont2 {
     display: flex;
     height: 100%;
     overflow: auto;

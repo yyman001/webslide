@@ -189,7 +189,7 @@
                     //console.log(treeDate.location2);
                 },
                 touchMove: function (e) {
-                    e.preventDefault();
+                    //e.preventDefault();
                     //console.log('touchMove');
                 },
                 touchEnd: function (e) {

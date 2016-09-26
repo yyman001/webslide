@@ -10,7 +10,7 @@
     <meta name="description" itemprop="description" content="">
     <meta itemprop="name" content="">
     <meta itemprop="image" content="">
-    <title>插件滚动</title>
+    <title>原生滚动</title>
 
     <link rel="stylesheet" href="css/index.css?v=1.0.0"/>
 </head>
@@ -69,7 +69,7 @@
                 x=0
         </div>
         <div class="mSlider__scroll" style="background-color: blueviolet">
-                <div class="mSlider__scrollCont">
+                <div class="mSlider__scrollCont2">
                     x = 1
                         <p>I’m thrilled to announce a brand new workshop series I’m starting with Val Head about web animation! We’ll be taking two-day workshop around to different cities starting this November, starting with Austin and New York. Whether you’re a beginner or you’ve been diving into animation already, this course won’t just get you started- you’ll leave with all the tools necessary to make subtle and beautiful web animations, and how to pick the right tools for the job.
 
@@ -109,8 +109,6 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.transform2d.js"></script>
 <script type="text/javascript" src="js/alloy_finger.js"></script>
-<script type="text/javascript" src="js/iscroll.js"></script>
-<!--<script type="text/javascript" src="js/iscroll-lite.min.js"></script>-->
 <!--<script type="text/javascript" src="js/vconsole.min.js"></script>-->
 <script type="text/javascript" src="js/jquery.mSlider.js"></script>
 <!--<script type="text/javascript" src="js/index.js"></script>-->
@@ -149,10 +147,59 @@
 
 
 
+    //    var winW = window.innerWidth;
+//    var winH = window.innerHeight;
+
+//    var mSlider = document.querySelector('.mSlider');
+//    var mSlider__baseSliders = document.querySelectorAll('.mSlider__baseSlider');
+//    var scrollSlider__cont = document.querySelector('.scrollSlider__cont');
+
+//    var basePage = []; //基础页面 dom
+//    var index = 0;
+
+//    var hasType = !1;
+//    for (var i = 0, l = mSlider__baseSliders.length; i < l; i++) {
+//        basePage.push(mSlider__baseSliders[i])
+//    }
+//
+
+//
+//    $mSlider__baseSliders.each(function(){
+//        basePage.push($(this))
+//    });
+//
+//    console.log(basePage);
+
+//    console.log(winW, winH);
 
 
-    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-    
+//    mSlider.style.width = winW + 'px';
+//    mSlider.style.height = winH + 'px';
+
+
+    /*if (distance > 0) {
+        arrow = '下滑';
+        index--;
+    } else if (distance < 0) {
+        arrow = '上滑';
+        index++;
+    }
+
+    if (Math.abs(distance) > 200) {
+        console.log('切换页面');
+        if(index < 0){
+            index = 0;
+        }else if(index > 2){
+            index = 2;
+        }
+        console.log('3索引:',index);
+    }
+*/
+
+
+
+
+
 
 
     $('.mSlider').mSlider({
@@ -164,12 +211,6 @@
         }
     });
 
-    myScroll = new IScroll('.mSlider__scroll', {
-        scrollbars: true,
-        interactiveScrollbars: true,
-        shrinkScrollbars: 'scale',
-        fadeScrollbars: true,
-        click:true});
 
 
 
