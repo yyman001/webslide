@@ -179,14 +179,37 @@
                 }
             }
         }
-
-        function init(){
-
+        /*IScroll*/
+        function createIScroll(ele){
+            new IScroll(ele, {
+                scrollbars: true,
+                interactiveScrollbars: true,
+                shrinkScrollbars: 'scale',
+                fadeScrollbars: true,
+                click:true}
+            );
         }
+        /*fixCreateIScroll*/
+        function fixCreateIScroll(){
+            console && console.log('正在尝试外部链接加载文件');
+            $.getScript('//cdn.bootcss.com/iScroll/5.2.0/iscroll.min.js').done(function(){
+                $.each(failScrollElement,function(i,ele){
+                    try {
+                        createIScroll(ele);
+                        console && console.log(ele,'元素插件初始化成功!');
+                    }catch (e){
+                        console && console.log(e);
+                        console && console.log('插件初始化失败!');
+                    }
+                })
+            });
+        }
+
         var winW = window.innerWidth;
         var winH = window.innerHeight;
         var type;
-
+        var IScrollState = !1;
+        var failScrollElement = []; //记录初始化失败的 滚动元素
 
         console.log(winW, winH);
         var $pre,$cur,$next;
@@ -236,18 +259,16 @@
                     if($(ele2).hasClass('mSlider__scroll') && !options.nativeScroll){
                         try {
                             $(ele2).addClass('mSlider__scroll--iScrollPlug');
-                            new IScroll(ele2, {
-                                scrollbars: true,
-                                interactiveScrollbars: true,
-                                shrinkScrollbars: 'scale',
-                                fadeScrollbars: true,
-                                click:true});
+                            createIScroll(ele2);
+                            console && console.log(ele2,'元素插件初始化成功!');
                         }
                         catch (e) {
                             //如果没有加载到依赖插件,抛出 异常错误
-                            console && console.log(e)
+                            console && console.log(e);
+                            console && console.log('插件初始化失败');
+                            failScrollElement.push(ele2);
+                            IScrollState = !0;
                         }
-
                     }
                     object.dom.push($(ele2));
                 });
@@ -263,6 +284,10 @@
             //启动插件滚动 阻止默认事件
             if(!options.nativeScroll){
                 document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+            }
+            //启动插滚动插件修正方案
+            if(IScrollState){
+                fixCreateIScroll();
             }
             new AlloyFinger(this, {
                 distance:100,
