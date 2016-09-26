@@ -50,8 +50,9 @@
          上下左右切换动画
          */
         var isAction = !1;
+        var timer = null;
         function slideTo($target,$next,direction){
-            //var $d = $.Deferred();
+            var $d = $.Deferred();
             var formTranslate = '';
             var toTranslate = '';
 
@@ -83,7 +84,19 @@
                 $next.css({"zIndex":1});
                 $target.css({"zIndex": -1,"visibility": "hidden"});
                 isAction = !1;
+                $d.resolve();
+                console.log('resolve');
+                if(timer){clearTimeout(timer);timer = null;}
             });
+            if(timer){clearTimeout(timer);timer = null;}
+            timer = setTimeout(function(){
+               $d.reject('失败');
+                isAction = !1; //动画回调失败后解锁
+                console.log('reject');
+            },500);
+
+            return $d.promise();
+
         }
 
 
@@ -175,42 +188,41 @@
             });
 
             treeDate.length = treeDate.childrenFirstDom.length;
-            console.table(treeDate);
 
             var $pre,$cur,$next;
 
             new AlloyFinger(this, {
                 distance:100,
                 touchStart: function (e) {
-                    console.clear();
-                    console.log('treeDate.x:',treeDate.x);
-                    console.log('treeDate.y:',treeDate.y);
-                    //console.log(treeDate.location);
-                    //console.log(treeDate.location2);
+                    //console.clear();
+                    //console.log('treeDate.x:',treeDate.x);
+                    //console.log('treeDate.y:',treeDate.y);
+                    //console.log('isAction:',isAction);
                 },
                 touchMove: function (e) {
                     //e.preventDefault();
-                    //console.log('touchMove');
+
                 },
                 touchEnd: function (e) {
                     //console.log('touchEnd');
+
                 },
                 touchCancel: function (e) {
 
                 },
                 swipe: function (evt) {
                     //console.log('isAction:',isAction);
-                    //if(isAction){return}
-                    //isAction = !0;
-                    //event = e || e.event;
-                    //console.log(evt);
-                    //console.log("swipe" + evt.direction,evt.direction);
+                    //isAction = !1;
+                    if(isAction){  console.log('isAction:11111111111'); return;}
 
-                    //console.log('treeDate.x:',treeDate.x);
-                    //console.log('treeDate.y:',treeDate.y);
+                    console.log('isAction:222222222');
+                    console.log('isAction:',isAction);
+                    console.log('isAction:333333');
 
-                    //var oldIndex = index;
-
+                    //if(isAction){
+                    //    console.log('isAction:444444');
+                    //    return;
+                    //}
 
                     /*
                     * Up/Down  上下滑,先判断 y 坐标
@@ -226,42 +238,40 @@
                         case 'Up':
 
                             if(treeDate.x === 0){
-
                                 $cur = treeDate.childrenFirstDom[treeDate.y];
-
                                 if(treeDate.y < treeDate.length -1 && treeDate.length > 1){
+                                    isAction = !0;
                                     treeDate.y++;
                                     treeDate.actionIndex++;
                                     $next = treeDate.childrenFirstDom[treeDate.y];
-
                                     before($pre,$cur,$next,evt.direction,treeDate.location);
-
-                                    slideTo($cur,$next,evt.direction);
+                                    slideTo($cur,$next,evt.direction).then(function(){
+                                        console.log('回调');
+                                    },function(err){
+                                        console.log((err))
+                                    });
+                                    //slideTo($cur,$next,evt.direction);
                                 }
-
-
-
                             }
-
-                            //console.log('treeDate.x:',treeDate.x);
-                            //console.log('treeDate.y:',treeDate.y);
-                            //console.log('treeDate.length:',treeDate.length);
 
                             break;
                         case 'Down':
                             if(treeDate.x === 0){
-
                                 $cur = treeDate.childrenFirstDom[treeDate.y];
-
                                 if(treeDate.y > 0){
+                                    isAction = !0;
                                     treeDate.y--;
                                     treeDate.actionIndex--;
                                     $next = treeDate.childrenFirstDom[treeDate.y];
 
                                     before($pre,$cur,$next,evt.direction,treeDate.location);
 
-                                    slideTo($cur,$next,evt.direction);
-
+                                    //slideTo($cur,$next,evt.direction);
+                                    slideTo($cur,$next,evt.direction).then(function(){
+                                        console.log('回调');
+                                    },function(err){
+                                        console.log((err))
+                                    });
                                 }
                             }
 
@@ -278,7 +288,7 @@
 
                             //console.log('666:',treeDate.childrenDom[treeDate.y]);
                             if(type === 'infinite'){
-
+                                isAction = !0;
                                 $cur = treeDate.childrenDom[treeDate.y].shift();
                                 treeDate.childrenDom[treeDate.y].push($cur);
                                 $next = treeDate.childrenDom[treeDate.y][0];
@@ -287,16 +297,13 @@
                                     $pre = $next;
                                 }else{
                                     $pre = treeDate.childrenDom[treeDate.y][1];
-                                  /*  $pre = treeDate.childrenDom[treeDate.y].pop();
-                                    treeDate.childrenDom[treeDate.y].push($pre);*/
-                                    //treeDate.childrenDom[treeDate.y].push($cur);
                                 }
 
                                 //treeDate.childrenDom[treeDate.y].push($cur);
 
-                                console.log('$pre:',$pre.html());
-                                console.log('$cur:',$cur.html());
-                                console.log('$next',$next.html());
+                                //console.log('$pre:',$pre.html());
+                                //console.log('$cur:',$cur.html());
+                                //console.log('$next',$next.html());
 
                                 treeDate.x++;
                                 if(treeDate.x > treeDate.childrenDom[treeDate.y].length -1){
@@ -305,8 +312,12 @@
 
                                 console.log('X : >>>>>>>>>>', treeDate.x);
                                 //before($pre,$cur,$next,evt.direction,treeDate.location);
-                                slideTo($cur,$next,evt.direction);
-
+                                //slideTo($cur,$next,evt.direction);
+                                slideTo($cur,$next,evt.direction).then(function(){
+                                    console.log('回调');
+                                },function(err){
+                                    console.log((err))
+                                });
                                 //if(treeDate.x === treeDate.childrenDom[treeDate.y].length -1){
                                 //    treeDate.x = -1;
                                 //    $cur = treeDate.childrenFirstDom[treeDate.x + 1];
@@ -314,16 +325,23 @@
                             }else{
                                 $cur = treeDate.childrenFirstDom[treeDate.x];
                                 if(treeDate.x < treeDate.childrenDom[treeDate.y].length -1){
+                                    isAction = !0;
                                     treeDate.x++;
                                     //treeDate.actionIndex++;
                                     $next = treeDate.childrenDom[treeDate.y][treeDate.x];
 
                                     before($pre,$cur,$next,evt.direction,treeDate.location);
 
-                                    slideTo($cur,$next,evt.direction);
+                                    //slideTo($cur,$next,evt.direction);
+                                    slideTo($cur,$next,evt.direction).then(function(){
+                                        console.log('回调');
+                                    },function(err){
+                                        console.log((err))
+                                    });
+
                                 }
 
-                                console.log('X : >>>>>>>>>>', treeDate.x);
+                                //console.log('X : >>>>>>>>>>', treeDate.x);
 
                             }
 
@@ -338,7 +356,7 @@
                             type = treeDate.children[treeDate.y]["dateType"];
 
                             if(type === 'infinite'){
-
+                                isAction = !0;
                                 if(treeDate.childrenDom[treeDate.y].length == 2){ //只有2个元素循环的时候
                                     //$pre = $next;
                                     $pre = treeDate.childrenDom[treeDate.y][1];
@@ -346,73 +364,44 @@
                                 }else{
                                     $pre = treeDate.childrenDom[treeDate.y][1];
                                     $cur = treeDate.childrenDom[treeDate.y][0];
-
-                                    // $pre = treeDate.childrenDom[treeDate.y].pop();
-                                    //treeDate.childrenDom[treeDate.y].push($pre);
                                 }
-
 
                                 $next = treeDate.childrenDom[treeDate.y].pop();
                                 treeDate.childrenDom[treeDate.y].unshift($next);
-
 
                                 //treeDate.childrenDom[treeDate.y].push($cur);
                                 treeDate.x--;
                                 if(treeDate.x < 0){
                                     treeDate.x = treeDate.childrenDom[treeDate.y].length -1;
+
                                 }
-                                //
-                                //if(treeDate.x > treeDate.childrenDom[treeDate.y].length -1){
-                                //    treeDate.x = 0;
-                                //}
 
-
-                                //treeDate.childrenDom[treeDate.y].push($cur);
-
-                                console.log('$pre:',$pre.html());
-                                console.log('$cur:',$cur.html());
-                                console.log('$next',$next.html());
-
-                                console.log('X : <<<<<<<<<<', treeDate.x);
-
-                                //before($pre,$cur,$next,evt.direction,treeDate.location);
-                                slideTo($cur,$next,evt.direction);
+                                //slideTo($cur,$next,evt.direction);
+                                slideTo($cur,$next,evt.direction).then(function(){
+                                    console.log('回调');
+                                },function(err){
+                                    console.log((err))
+                                });
                             }else{
                                 $cur = treeDate.childrenDom[treeDate.y][treeDate.x];
                                 if(treeDate.x > 0){
                                     treeDate.x--;
+                                    isAction = !0;
                                     $next = treeDate.childrenDom[treeDate.y][treeDate.x];
                                     before($pre,$cur,$next,evt.direction,treeDate.location);
-                                    slideTo($cur,$next,evt.direction);
+                                    //slideTo($cur,$next,evt.direction);
+                                    slideTo($cur,$next,evt.direction).then(function(){
+                                        console.log('回调');
+                                    },function(err){
+                                        console.log((err))
+                                    });
                                 }
-                                console.log('X : <<<<<<<<', treeDate.x);
+                                //console.log('X : <<<<<<<<', treeDate.x);
                             }
                             //$cur = treeDate.childrenFirstDom[treeDate.x];
-                            console.log('循环模式',type);
-
-
+                            //console.log('循环模式',type);
                             break;
                     }
-
-
-                    //if (index < 0) {
-                    //    index = 0;
-                    //} else if (index > 2) {
-                    //    index = 2;
-                    //}
-
-                    //console.log('$pre:',$pre);
-                    //console.log('$cur:',$cur);
-                    //console.log('$next:',$next);
-
-
-                    //执行切换前
-
-
-
-
-                    //执行切换后
-
 
                     //当前位置切换不等于最前 和 最后
                     //if(oldIndex !== index){
@@ -424,8 +413,6 @@
 
                 }
             });
-
-
         });
     }
 
