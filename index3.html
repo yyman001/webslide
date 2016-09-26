@@ -82,22 +82,44 @@
                             To make sure you get as much out of these workshops as possible we’re keeping the the class sizes small. Each workshop is limited to 40 participants and will include hands-on exercises to get you started.</p>
                 </div>
         </div>
+        <div class="mSlider__scroll" style="background-color: #e24d0f">
+            <div class="mSlider__scrollCont">
+                x = 1
+                    <p>I’m thrilled to announce a brand new workshop series I’m starting with Val Head about web animation! We’ll be taking two-day workshop around to different cities starting this November, starting with Austin and New York. Whether you’re a beginner or you’ve been diving into animation already, this course won’t just get you started- you’ll leave with all the tools necessary to make subtle and beautiful web animations, and how to pick the right tools for the job.
+
+                        Val and I both have been speaking and giving workshops around the world, and together we make a venn diagram of strength and knowledge about how to animate on the web. We’ll be covering everything from theory, to technique, to bug fixes and cross-browser stability. We both focus on accessibility and performance. You’ll learn how to make great animation decisions both from a design and technology perspective. We’ll cover working with SVG, CSS, and JavaScript technologies, both native and API. We’ll discuss complex animations, responsive animations, and UX animations, and go over when to use each. You won’t find this much web animation knowledge packed into one workshop anywhere else!
+
+                        To make sure you get as much out of these workshops as possible we’re keeping the the class sizes small. Each workshop is limited to 40 participants and will include hands-on exercises to get you started. I’m thrilled to announce a brand new workshop series I’m starting with Val Head about web animation! We’ll be taking two-day workshop around to different cities starting this November, starting with Austin and New York. Whether you’re a beginner or you’ve been diving into animation already, this course won’t just get you started- you’ll leave with all the tools necessary to make subtle and beautiful web animations, and how to pick the right tools for the job.
+
+                        Val and I both have been speaking and giving workshops around the world, and together we make a venn diagram of strength and knowledge about how to animate on the web. We’ll be covering everything from theory, to technique, to bug fixes and cross-browser stability. We both focus on accessibility and performance. You’ll learn how to make great animation decisions both from a design and technology perspective. We’ll cover working with SVG, CSS, and JavaScript technologies, both native and API. We’ll discuss complex animations, responsive animations, and UX animations, and go over when to use each. You won’t find this much web animation knowledge packed into one workshop anywhere else!
+
+                        To make sure you get as much out of these workshops as possible we’re keeping the the class sizes small. Each workshop is limited to 40 participants and will include hands-on exercises to get you started.</p>
+            </div>
+        </div>
     </div>
 
-    <div class="mSlider__spa">
+    <div class="mSlider__spa" datatype="infinite">
         <div class="mSlider__baseSlider" style="background-color: royalblue">
             y = 2 , x = 0
         </div>
         <div class="mSlider__scroll" style="background-color: #23c3e2">
-            y = 2 , x = 1
+            <div>
+                y = 2 , x = 1
+            </div>
         </div>
-        <div class="mSlider__scroll" style="background-color: #e1b71c">
-            y = 2 , x = 2
+        <div class="mSlider__baseSlider" style="background-color: #e1b71c">
+            <div>
+                y = 2 , x = 2
+            </div>
         </div>
     </div>
 
     <div class="mSlider__spa">
         <div class="mSlider__baseSlider" style="background-color: #333333">
+            y = 3 , x = 0
+        </div>
+        <div class="mSlider__baseSlider" style="background-color: #7fec22">
+            y = 3 , x = 1
         </div>
     </div>
 
@@ -151,25 +173,28 @@
 
 
 
-    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
     
 
 
     $('.mSlider').mSlider({
+       // nativeScroll:false, //是否使用原生滚动
         before: function(object) {
-          //  console.log('执行前:',object);
+//            console.log(object);
+            console.table(object);
         },
-        after: function($pre, $cur, $next) {
-            console.log('回调');
+        after: function(object) {
+//            console.log(object);
+            console.table(object);
         }
     });
 
-    myScroll = new IScroll('.mSlider__scroll', {
-        scrollbars: true,
-        interactiveScrollbars: true,
-        shrinkScrollbars: 'scale',
-        fadeScrollbars: true,
-        click:true});
+//        new IScroll('.mSlider__scroll', {
+//        scrollbars: true,
+//        interactiveScrollbars: true,
+//        shrinkScrollbars: 'scale',
+//        fadeScrollbars: true,
+//        click:true});
 
 
 

@@ -1,107 +1,39 @@
-html,
-body {
-  width: 100%; }
+html, body { width: 100%; }
 
-body, h1, h2, h3, h4, h5, p, ul, li, dl, dt, dd {
-  margin: 0;
-  padding: 0; }
+body, h1, h2, h3, h4, h5, p, ul, li, dl, dt, dd { margin: 0; padding: 0; }
 
-body, button, input, select, textarea {
-  font-family: 'helvetica neue',arial,'hiragino sans gb',stheiti,'wenquanyi micro hei',\5FAE\8F6F\96C5\9ED1,\5B8B\4F53,sans-serif; }
+body, button, input, select, textarea { font-family: 'helvetica neue',arial,'hiragino sans gb',stheiti,'wenquanyi micro hei',\5FAE\8F6F\96C5\9ED1,\5B8B\4F53,sans-serif; }
 
-a {
-  text-decoration: none;
-  outline: 0; }
+a { text-decoration: none; outline: 0; }
 
-a, img {
-  -webkit-touch-callout: none; }
+a, img { -webkit-touch-callout: none; }
 
-li {
-  list-style: none; }
+li { list-style: none; }
 
-img {
-  display: block;
-  border: 0 none;
-  max-width: 100%; }
+img { display: block; border: 0 none; max-width: 100%; }
 
-input, button {
-  -webkit-appearance: none; }
+input, button { -webkit-appearance: none; }
 
-* {
-  -webkit-tap-highlight-color: transparent; }
+* { -webkit-tap-highlight-color: transparent; }
 
-img, a {
-  -webkit-tap-highlight-color: transparent; }
+img, a { -webkit-tap-highlight-color: transparent; }
 
-.clear:after {
-  content: '';
-  display: table;
-  clear: both; }
+.clear:after { content: ''; display: table; clear: both; }
 
-body {
-  background-color: #f0f0f0; }
+body { background-color: #f0f0f0; }
 
-.cover-img {
-  position: relative;
-  display: block;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: cover; }
+.cover-img { position: relative; display: block; background-repeat: no-repeat; background-position: 50% 50%; background-size: cover; }
 
-.mSlider {
-  position: relative;
-  margin: 0 auto;
-  max-width: 640px;
-  height: 100%;
-  overflow: hidden; }
-  .mSlider__spa {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0; }
-  .mSlider--action {
-    visibility: visible;
-    z-index: 1; }
-  .mSlider__baseSlider, .mSlider__scroll {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    visibility: hidden;
-    z-index: -1; }
-    .mSlider__baseSlider.visibility, .mSlider__scroll.visibility {
-      visibility: visible;
-      z-index: 1; }
-  .mSlider__scrollCont {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    -webkit-tap-highlight-color: transparent;
-    width: 100%;
-    transform: translateZ(0);
-    user-select: none;
-    text-size-adjust: none; }
-  .mSlider__scrollCont2 {
-    display: flex;
-    height: 100%;
-    overflow: auto;
-    -webkit-font-smoothing: antialiased;
-    -webkit-user-drag: none;
-    -webkit-overflow-scrolling: touch; }
+.mSlider { position: relative; margin: 0 auto; max-width: 640px; height: 100%; overflow: hidden; }
+.mSlider__spa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+.mSlider--action { visibility: visible; z-index: 1; }
+.mSlider__baseSlider, .mSlider__scroll { position: absolute; top: 0; left: 0; display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; width: 100%; height: 100%; overflow: hidden; visibility: hidden; z-index: -1; }
+.mSlider__baseSlider.visibility, .mSlider__scroll.visibility { visibility: visible; z-index: 1; }
+.mSlider__scrollCont { height: 100%; overflow: auto; -webkit-font-smoothing: antialiased; -webkit-user-drag: none; -webkit-overflow-scrolling: touch; }
+.mSlider__iScrollPlug .mSlider__scrollCont { position: absolute; top: 0; left: 0; z-index: 1; -webkit-tap-highlight-color: transparent; width: 100%; height: auto; -webkit-transform: translateZ(0); transform: translateZ(0); -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-text-size-adjust: none; -ms-text-size-adjust: none; text-size-adjust: none; -webkit-overflow-scrolling: auto; }
 
-.scrollSlider__cont {
-  display: flex;
-  width: 100%;
-  overflow: auto; }
+.scrollSlider__cont { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; width: 100%; overflow: auto; }
 
-p {
-  width: 100%;
-  line-height: 2;
-  font-size: 16px; }
+p { width: 100%; line-height: 2; font-size: 16px; }
 
 /*# sourceMappingURL=index.css.map */

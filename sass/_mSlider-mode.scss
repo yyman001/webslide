@@ -41,32 +41,47 @@
 
 
   &__scrollCont{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    width: 100%;
-    transform: translateZ(0);
-    user-select: none;
-    text-size-adjust: none;
-    //height: 100%;
-    //overflow: auto;
-    //-webkit-font-smoothing: antialiased;
-    //-webkit-user-drag: none;
-    //-webkit-overflow-scrolling: touch;
-  }
-  //原生滚动
-  &__scrollCont2{
-    display: flex;
+    //position: absolute;
+    //top: 0;
+    //left: 0;
+    //z-index: 1;
+    //-webkit-tap-highlight-color: rgba(0,0,0,0);
+    //width: 100%;
+    //transform: translateZ(0);
+    //user-select: none;
+    //text-size-adjust: none;
     height: 100%;
     overflow: auto;
     -webkit-font-smoothing: antialiased;
     -webkit-user-drag: none;
     -webkit-overflow-scrolling: touch;
   }
+  //原生滚动
+  //&__scrollCont2{
+  //  display: flex;
+  //  height: 100%;
+  //  overflow: auto;
+  //  -webkit-font-smoothing: antialiased;
+  //  -webkit-user-drag: none;
+  //  -webkit-overflow-scrolling: touch;
+  //}
 
-
+  //插件滚动样式设置
+  &__iScrollPlug{
+    .mSlider__scrollCont{
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      width: 100%;
+      height: auto;
+      transform: translateZ(0);
+      user-select: none;
+      text-size-adjust: none;
+      -webkit-overflow-scrolling: auto;
+    }
+  }
 
 }
 
@@ -74,7 +89,6 @@
   &__cont{
     display: flex;
     width: 100%;
-    //height: 100%;
     overflow:auto;
     }
 }
