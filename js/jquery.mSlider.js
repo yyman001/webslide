@@ -430,6 +430,7 @@ var iscrollList = {};   //存放插件生成的滚动页面引用对象
         var scrollTop = !1;     //滚动到顶部
         var slideArrow;         //记录滑动方向
         var isScrollPage = !1; //是否为滚动页面类型
+        var maxH;             //滚动页面高度
         var $pre,$cur,$next;
         var treeDate = {
             x: 0, //列
@@ -479,44 +480,47 @@ var iscrollList = {};   //存放插件生成的滚动页面引用对象
                             $(ele2).addClass('mSlider__scroll--iScrollPlug');
                             iscrollList["scrollPage" + i + "_" + i2 ] = createIScroll(ele2);
 
-                            iscrollList["scrollPage" + i + "_" + i2 ].on('scrollStart', function () {
-                                console.log(this);
-                                isScrollPage = !0;
-                                maxH = this.maxScrollY;
-                                //console.log('this.y:', this.y);
-                                console.log('maxH:', maxH);
-                                console.log(treeDate.x);
-                            });
+                            if( i2 === 0){   //主轴上的滚动页面才需要这样,
+                                iscrollList["scrollPage" + i + "_" + i2 ].on('scrollStart', function () {
+                                    isScrollPage = !0;
+                                    maxH = this.maxScrollY;
+                                    //console.log('this.y:', this.y);
+                                    console.log('maxH:', maxH);
+                                    console.log(treeDate.x);
+                                });
 
-                            iscrollList["scrollPage" + i + "_" + i2 ].on('scroll',function(){
-                                console.log('this.y:', this.y);
+                                iscrollList["scrollPage" + i + "_" + i2 ].on('scroll',function(){
+                                    console.log('this.y:', this.y);
 
-                                if(this.y > 30){
-                                    console.log('上滑刷新');
-                                    scrollTop = !0;
-                                }else if(this.y < maxH - 30){
-                                    scrollBottom = !0;
-                                    console.log('下滑刷新');
-                                }else{
-                                    console.log('不切换');
-                                    //pullStart = false;
-                                    scrollBottom = !1;
-                                    scrollTop = !1;
-                                }
-                                return false;
-                            });
+                                    if(this.y > 30){
+                                        console.log('上滑刷新');
+                                        scrollTop = !0;
+                                        scrollBottom = !1;
+                                    }else if(this.y < maxH - 30){
+                                        scrollBottom = !0;
+                                        scrollTop = !1;
+                                        console.log('下滑刷新');
+                                    }else{
+                                        console.log('不切换');
+                                        scrollBottom = !1;
+                                        scrollTop = !1;
+                                    }
+                                    return false;
+                                });
 
-                            iscrollList["scrollPage" + i + "_" + i2 ].on('scrollEnd', function () {
+                                iscrollList["scrollPage" + i + "_" + i2 ].on('scrollEnd', function () {
+                                    console.log('scrollTop:', scrollTop, 'scrollBottom:', scrollBottom);
+                                    if(scrollTop){
+                                        console.log('下滑',scrollTop);
+                                        slideDown();
+                                    }else if(scrollBottom){
+                                        console.log('上滑',scrollBottom);
+                                        slideUp();
+                                    }
 
-                                if(scrollTop){
-                                    console.log('下滑',scrollTop);
-                                    slideDown();
-                                }else if(scrollBottom){
-                                    console.log('上滑',scrollBottom);
-                                    slideUp();
-                                }
+                                });
+                            }
 
-                            });
                             console && console.log(ele2,'元素插件初始化成功!');
                         }
                         catch (e) {
@@ -602,4 +606,3 @@ var iscrollList = {};   //存放插件生成的滚动页面引用对象
     }
 })(jQuery,window,document);
 
-var maxH,_tipH,pullStart;
