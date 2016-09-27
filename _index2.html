@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="description" itemprop="description" content="">
+    <meta itemprop="name" content="">
+    <meta itemprop="image" content="">
+    <title></title>
+
+    <link rel="stylesheet" href="css/index.css?v=1.0.0"/>
+</head>
+<body>
+
+<div class="mSlider">
+
+
+     <div class="mSlider__baseSlider visibility">
+          <div class="mSlider__scrollSlider">
+               <div class="scrollSlider__cont">
+                   <p>I’m thrilled to announce a brand new workshop series I’m starting with Val Head about web animation! We’ll be taking two-day workshop around to different cities starting this November, starting with Austin and New York. Whether you’re a beginner or you’ve been diving into animation already, this course won’t just get you started- you’ll leave with all the tools necessary to make subtle and beautiful web animations, and how to pick the right tools for the job.
+
+                       Val and I both have been speaking and giving workshops around the world, and together we make a venn diagram of strength and knowledge about how to animate on the web. We’ll be covering everything from theory, to technique, to bug fixes and cross-browser stability. We both focus on accessibility and performance. You’ll learn how to make great animation decisions both from a design and technology perspective. We’ll cover working with SVG, CSS, and JavaScript technologies, both native and API. We’ll discuss complex animations, responsive animations, and UX animations, and go over when to use each. You won’t find this much web animation knowledge packed into one workshop anywhere else!
+
+                       To make sure you get as much out of these workshops as possible we’re keeping the the class sizes small. Each workshop is limited to 40 participants and will include hands-on exercises to get you started. I’m thrilled to announce a brand new workshop series I’m starting with Val Head about web animation! We’ll be taking two-day workshop around to different cities starting this November, starting with Austin and New York. Whether you’re a beginner or you’ve been diving into animation already, this course won’t just get you started- you’ll leave with all the tools necessary to make subtle and beautiful web animations, and how to pick the right tools for the job.
+
+                   Val and I both have been speaking and giving workshops around the world, and together we make a venn diagram of strength and knowledge about how to animate on the web. We’ll be covering everything from theory, to technique, to bug fixes and cross-browser stability. We both focus on accessibility and performance. You’ll learn how to make great animation decisions both from a design and technology perspective. We’ll cover working with SVG, CSS, and JavaScript technologies, both native and API. We’ll discuss complex animations, responsive animations, and UX animations, and go over when to use each. You won’t find this much web animation knowledge packed into one workshop anywhere else!
+
+                   To make sure you get as much out of these workshops as possible we’re keeping the the class sizes small. Each workshop is limited to 40 participants and will include hands-on exercises to get you started.</p>
+
+               </div>
+          </div>
+
+     </div>
+
+    <div class="mSlider__baseSlider ">
+        1
+    </div>
+
+
+     <div class="mSlider__baseSlider">
+333333333
+     </div>
+</div>
+
+
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<!--<script type="text/javascript" src="js/vconsole.min.js"></script>-->
+<!--<script type="text/javascript" src="js/index.js"></script>-->
+
+<script type="text/javascript">
+
+    var winW = window.innerWidth;
+    var winH = window.innerHeight;
+
+    var mSlider = document.querySelector('.mSlider');
+    var mSlider__baseSliders = document.querySelectorAll('.mSlider__baseSlider');
+    var scrollSlider__cont = document.querySelector('.scrollSlider__cont');
+
+    var basePage = []; //基础页面 dom
+    var action = 0;
+
+    var hasType = !1;
+//    for (var i = 0, l = mSlider__baseSliders.length; i < l; i++) {
+//        basePage.push(mSlider__baseSliders[i])
+//    }
+
+    var $mSlider__baseSliders = $('.mSlider__baseSlider');
+
+    $mSlider__baseSliders.each(function(){
+        basePage.push($(this))
+    });
+
+    console.log(basePage);
+
+    console.log(winW, winH);
+    //    console.log(mSlider);
+    //    console.log(mSlider__baseSliders);
+    //    console.log(scrollSlider__cont);
+
+
+    mSlider.style.width = winW + 'px';
+    mSlider.style.height = winH + 'px';
+
+    //    mSlider__baseSliders[0].style.height  = winH + 'px';
+
+    function getPage(event, page) {
+        return event.changedTouches ? event.changedTouches[0][page] : event[page];
+    }
+
+
+    var isTouched,
+            isMoved,
+            touchStartTime,
+            isScrolling,
+            currentTranslate,
+            startTranslate,
+            allowThresholdMove,
+    // Form elements to match
+            formElements = 'input, select, textarea, button',
+    // Last click time
+            lastClickTime = Date.now(), clickTimeout,
+    //Velocities
+            velocities = [],
+            s = {},
+            allowMomentumBounce;
+
+    // Animating Flag
+    s.animating = false;
+
+    // Touches information
+    s.touches = {
+        startX: 0,
+        startY: 0,
+        currentX: 0,
+        currentY: 0,
+        diff: 0
+    };
+
+    var isTouchEvent, startMoving;
+
+    mSlider.addEventListener('touchstart', function (e) {
+        console.clear();
+        if (e.originalEvent) e = e.originalEvent;
+        isTouchEvent = e.type === 'touchstart';
+        console.log(isTouchEvent);
+        if (!isTouchEvent && 'which' in e && e.which === 3) return;
+
+        isTouched = true;
+        isMoved = false;
+        isScrolling = undefined;
+        startMoving = undefined;
+        s.touches.startX = s.touches.currentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+        s.touches.startY = s.touches.currentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+        touchStartTime = Date.now();
+
+        s.swipeDirection = undefined;
+
+        if (e.type !== 'touchstart') {
+            var preventDefault = true;
+
+            if ($(e.target).is(formElements)) preventDefault = false;
+            if (document.activeElement && $(document.activeElement).is(formElements)) {
+                document.activeElement.blur();
+            }
+            if (preventDefault) {
+                e.preventDefault();
+            }
+        }
+        console.log(s.touches);
+    }, false);
+
+
+    mSlider.addEventListener('touchmove', function (e) {
+        if (e.originalEvent) e = e.originalEvent;
+        if (isTouchEvent && e.type === 'mousemove') return;
+
+        s.touches.currentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+        s.touches.currentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+
+//        if (typeof isScrolling === 'undefined') {
+//            var touchAngle = Math.atan2(Math.abs(s.touches.currentY - s.touches.startY), Math.abs(s.touches.currentX - s.touches.startX)) * 180 / Math.PI;
+//            console.log(touchAngle);
+//        }
+
+
+        if (typeof startMoving === 'undefined') {
+            if (s.touches.currentX !== s.touches.startX || s.touches.currentY !== s.touches.startY) {
+                startMoving = true;
+            }
+        }
+
+        if (!isTouched) return;
+
+        if (isScrolling)  {
+            isTouched = false;
+            return;
+        }
+
+        if (!startMoving) {
+            return;
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        isMoved = true;
+
+        var diff = s.touches.diff =  s.touches.currentY - s.touches.startY;
+
+        diff = diff * 1;
+
+        console.log('diff:',diff);
+        s.swipeDirection = diff < 0 ? 'prev' : 'next';
+
+//        currentTranslate = diff + startTranslate;
+
+    }, false);
+
+    mSlider.addEventListener('touchend', function (e) {
+        if (e.originalEvent) e = e.originalEvent;
+        if (!isTouched) return;
+        // Time diff
+        var touchEndTime = Date.now();
+        var timeDiff = touchEndTime - touchStartTime;
+        console.log('currentTranslate:', currentTranslate);
+        console.log('s.swipeDirection:', s.swipeDirection);
+
+
+    }, false);
+
+
+
+</script>
+</body>
+</html>

@@ -211,6 +211,7 @@
  *  页面滚动模式 [自带原生 | 插件扩展 ]
  *  切换前后回调
  */
+var iscrollList = {};   //存放插件生成的滚动页面引用对象
 ;(function(){
     'use strict';
     $.fn.mSlider = function (opt) {
@@ -298,13 +299,16 @@
         function switchSlide($cur,$next,direction){
             before($cur,$next,direction);
             slideTo($cur,$next,direction).then(function(_$cur,_$prev){
+                isScrollPage = !1;
+                scrollBottom = !1;
+                scrollTop = !1;
                 after(_$cur,_$prev,direction)
             },function(err){
                 console && console.log((err))
             });
         }
         /*slideUp*/
-        function slideUp(direction){
+        function slideUp(){
             if(treeDate.x === 0){
                 $cur = treeDate.childrenFirstDom[treeDate.y];
                 if(treeDate.y < treeDate.length -1 && treeDate.length > 1){
@@ -312,12 +316,12 @@
                     treeDate.y++;
                     treeDate.actionIndex++;
                     $next = treeDate.childrenFirstDom[treeDate.y];
-                    switchSlide($cur,$next,direction);
+                    switchSlide($cur,$next,'Up');
                 }
             }
         }
         /*slideDown*/
-        function slideDown(direction){
+        function slideDown(){
             if(treeDate.x === 0){
                 $cur = treeDate.childrenFirstDom[treeDate.y];
                 if(treeDate.y > 0){
@@ -325,12 +329,12 @@
                     treeDate.y--;
                     treeDate.actionIndex--;
                     $next = treeDate.childrenFirstDom[treeDate.y];
-                    switchSlide($cur,$next,direction);
+                    switchSlide($cur,$next,'Down');
                 }
             }
         }
         /*slideLeft*/
-        function slideLeft(direction){
+        function slideLeft(){
             type = treeDate.children[treeDate.y]["dateType"];
             if(type === 'infinite'){
                 isAction = !0;
@@ -348,19 +352,19 @@
                 if(treeDate.x > treeDate.childrenDom[treeDate.y].length -1){
                     treeDate.x = 0;
                 }
-                switchSlide($cur,$next,direction);
+                switchSlide($cur,$next,'Left');
             }else{
                 $cur = treeDate.childrenFirstDom[treeDate.x];
                 if(treeDate.x < treeDate.childrenDom[treeDate.y].length -1){
                     isAction = !0;
                     treeDate.x++;
                     $next = treeDate.childrenDom[treeDate.y][treeDate.x];
-                    switchSlide($cur,$next,direction);
+                    switchSlide($cur,$next,'Left');
                 }
             }
         }
         /*slideRight*/
-        function slideRight(direction){
+        function slideRight(){
             type = treeDate.children[treeDate.y]["dateType"];
             if(type === 'infinite'){
                 isAction = !0;
@@ -375,34 +379,37 @@
                 if(treeDate.x < 0){
                     treeDate.x = treeDate.childrenDom[treeDate.y].length -1;
                 }
-                switchSlide($cur,$next,direction);
+                switchSlide($cur,$next,'Right');
             }else{
                 $cur = treeDate.childrenDom[treeDate.y][treeDate.x];
                 if(treeDate.x > 0){
                     treeDate.x--;
                     isAction = !0;
                     $next = treeDate.childrenDom[treeDate.y][treeDate.x];
-                    switchSlide($cur,$next,direction);
+                    switchSlide($cur,$next,'Right');
                 }
             }
         }
         /*IScroll*/
         function createIScroll(ele){
-            new IScroll(ele, {
+            return new IScroll(ele, {
                 scrollbars: true,
                 interactiveScrollbars: true,
                 shrinkScrollbars: 'scale',
                 fadeScrollbars: true,
-                click:true}
+                click:true,
+                    probeType:1
+            }
             );
         }
         /*fixCreateIScroll*/
-        function fixCreateIScroll(){
+        function fixCreateIScroll(i){
             console && console.log('正在尝试外部链接加载文件');
             $.getScript('//cdn.bootcss.com/iScroll/5.2.0/iscroll.min.js').done(function(){
-                $.each(failScrollElement,function(i,ele){
+                $.each(failScrollElement,function(i2,ele){
                     try {
-                        createIScroll(ele);
+                        //createIScroll(ele);
+                        iscrollList["scrollPage" + i + "_" + i2 ] = createIScroll(ele2);
                         console && console.log(ele,'元素插件初始化成功!');
                     }catch (e){
                         console && console.log(e);
@@ -417,7 +424,12 @@
         var type;
         var IScrollState = !1;
         var failScrollElement = []; //记录初始化失败的 滚动元素
-
+        //var iscrollList = {};   //存放插件生成的滚动页面引用对象
+        var scrollEnd = !1;     //滚动到底部或顶部
+        var scrollBottom = !1;     //滚动到底部
+        var scrollTop = !1;     //滚动到顶部
+        var slideArrow;         //记录滑动方向
+        var isScrollPage = !1; //是否为滚动页面类型
         var $pre,$cur,$next;
         var treeDate = {
             x: 0, //列
@@ -465,7 +477,46 @@
                     if($(ele2).hasClass('mSlider__scroll') && !options.nativeScroll){
                         try {
                             $(ele2).addClass('mSlider__scroll--iScrollPlug');
-                            createIScroll(ele2);
+                            iscrollList["scrollPage" + i + "_" + i2 ] = createIScroll(ele2);
+
+                            iscrollList["scrollPage" + i + "_" + i2 ].on('scrollStart', function () {
+                                console.log(this);
+                                isScrollPage = !0;
+                                maxH = this.maxScrollY;
+                                //console.log('this.y:', this.y);
+                                console.log('maxH:', maxH);
+                                console.log(treeDate.x);
+                            });
+
+                            iscrollList["scrollPage" + i + "_" + i2 ].on('scroll',function(){
+                                console.log('this.y:', this.y);
+
+                                if(this.y > 30){
+                                    console.log('上滑刷新');
+                                    scrollTop = !0;
+                                }else if(this.y < maxH - 30){
+                                    scrollBottom = !0;
+                                    console.log('下滑刷新');
+                                }else{
+                                    console.log('不切换');
+                                    //pullStart = false;
+                                    scrollBottom = !1;
+                                    scrollTop = !1;
+                                }
+                                return false;
+                            });
+
+                            iscrollList["scrollPage" + i + "_" + i2 ].on('scrollEnd', function () {
+
+                                if(scrollTop){
+                                    console.log('下滑',scrollTop);
+                                    slideDown();
+                                }else if(scrollBottom){
+                                    console.log('上滑',scrollBottom);
+                                    slideUp();
+                                }
+
+                            });
                             console && console.log(ele2,'元素插件初始化成功!');
                         }
                         catch (e) {
@@ -481,6 +532,8 @@
                 treeDate.children.push(object)
             });
 
+            console.log(iscrollList);
+
             $.each(treeDate.children,function(i,ele){
                 treeDate.childrenDom.push(ele.dom); //压入数组
             });
@@ -493,8 +546,9 @@
             }
             //启动插滚动插件修正方案
             if(IScrollState){
-                fixCreateIScroll();
+                //fixCreateIScroll();
             }
+
             new AlloyFinger(this, {
                 distance:100,
                 touchStart: function (e) {options.touchStart(e);},
@@ -502,6 +556,8 @@
                 touchEnd: function (e) {options.touchEnd(e)},
                 touchCancel: function (e) {options.touchCancel(e)},
                 swipe: function (evt) {
+                    //return;
+                   // if(scrollBottom){return}
                     if(isAction){return;}
                     /*
                     * Up/Down  上下滑,先判断 y 坐标
@@ -509,21 +565,41 @@
                     * */
                     switch (evt.direction){
                         case 'Up':
-                            slideUp(evt.direction);
+                            slideArrow = 'Up';
+                            if(!isScrollPage){
+                                slideUp();
+                            }
+                           // slideUp();
                             break;
                         case 'Down':
-                            slideDown(evt.direction);
+                            if(!isScrollPage){
+                                slideDown();
+                            }
+                            slideArrow = 'Down';
+                            //slideDown();
                             break;
                         case 'Left':
-                            slideLeft(evt.direction);
+                            slideArrow = 'Left';
+                            slideLeft();
                             break;
                         case 'Right':
-                            slideRight(evt.direction);
+                            slideArrow = 'Right';
+                            slideRight();
                             break;
                     }
+                    console.log('slideArrow:',slideArrow);
+                    console.log('isScrollPage:',isScrollPage);
                 },
                 singleTap: function (evt) {}
             });
+
+
+
+
+
+
         });
     }
 })(jQuery,window,document);
+
+var maxH,_tipH,pullStart;

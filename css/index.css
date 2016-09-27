@@ -18,23 +18,13 @@ input, button { -webkit-appearance: none; }
 
 img, a { -webkit-tap-highlight-color: transparent; }
 
-.clear:after { content: ''; display: table; clear: both; }
-
-body { background-color: #f0f0f0; }
-
-.cover-img { position: relative; display: block; background-repeat: no-repeat; background-position: 50% 50%; background-size: cover; }
-
 .mSlider { position: relative; margin: 0 auto; max-width: 640px; height: 100%; overflow: hidden; }
 .mSlider__spa { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
-.mSlider__spa:first-child .mSlider__baseSlider { font-size: 100px; visibility: visible; z-index: 1; }
+.mSlider__spa:first-child > div:first-child { font-size: 100px; visibility: visible; z-index: 1; }
 .mSlider--action { visibility: visible; z-index: 1; }
 .mSlider__baseSlider, .mSlider__scroll { position: absolute; top: 0; left: 0; display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; width: 100%; height: 100%; overflow: hidden; visibility: hidden; z-index: -1; }
 .mSlider__baseSlider.visibility, .mSlider__scroll.visibility { visibility: visible; z-index: 1; }
 .mSlider__scrollCont { height: 100%; overflow: auto; -webkit-font-smoothing: antialiased; -webkit-user-drag: none; -webkit-overflow-scrolling: touch; }
 .mSlider__scroll--iScrollPlug .mSlider__scrollCont { position: absolute; top: 0; left: 0; z-index: 1; -webkit-tap-highlight-color: transparent; width: 100%; height: auto; -webkit-transform: translateZ(0); transform: translateZ(0); -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-text-size-adjust: none; -ms-text-size-adjust: none; text-size-adjust: none; -webkit-overflow-scrolling: auto; }
-
-.scrollSlider__cont { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; width: 100%; overflow: auto; }
-
-p { width: 100%; line-height: 2; font-size: 16px; }
 
 /*# sourceMappingURL=index.css.map */

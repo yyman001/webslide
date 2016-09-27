@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <meta name="renderer" content="webkit">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="description" itemprop="description" content="">
+    <meta itemprop="name" content="">
+    <meta itemprop="image" content="">
+    <title></title>
+
+    <link rel="stylesheet" href="css/index.css?v=1.0.0"/>
+</head>
+<body>
+
+<div class="mSlider">
+
+
+     <div class="mSlider__baseSlider visibility">
+          <div class="mSlider__scrollSlider">
+               <div class="scrollSlider__cont">
+                   <p>I’m thrilled to announce a brand new workshop series I’m starting with Val Head about web animation! We’ll be taking two-day workshop around to different cities starting this November, starting with Austin and New York. Whether you’re a beginner or you’ve been diving into animation already, this course won’t just get you started- you’ll leave with all the tools necessary to make subtle and beautiful web animations, and how to pick the right tools for the job.
+
+                       Val and I both have been speaking and giving workshops around the world, and together we make a venn diagram of strength and knowledge about how to animate on the web. We’ll be covering everything from theory, to technique, to bug fixes and cross-browser stability. We both focus on accessibility and performance. You’ll learn how to make great animation decisions both from a design and technology perspective. We’ll cover working with SVG, CSS, and JavaScript technologies, both native and API. We’ll discuss complex animations, responsive animations, and UX animations, and go over when to use each. You won’t find this much web animation knowledge packed into one workshop anywhere else!
+
+                       To make sure you get as much out of these workshops as possible we’re keeping the the class sizes small. Each workshop is limited to 40 participants and will include hands-on exercises to get you started. I’m thrilled to announce a brand new workshop series I’m starting with Val Head about web animation! We’ll be taking two-day workshop around to different cities starting this November, starting with Austin and New York. Whether you’re a beginner or you’ve been diving into animation already, this course won’t just get you started- you’ll leave with all the tools necessary to make subtle and beautiful web animations, and how to pick the right tools for the job.
+
+                   Val and I both have been speaking and giving workshops around the world, and together we make a venn diagram of strength and knowledge about how to animate on the web. We’ll be covering everything from theory, to technique, to bug fixes and cross-browser stability. We both focus on accessibility and performance. You’ll learn how to make great animation decisions both from a design and technology perspective. We’ll cover working with SVG, CSS, and JavaScript technologies, both native and API. We’ll discuss complex animations, responsive animations, and UX animations, and go over when to use each. You won’t find this much web animation knowledge packed into one workshop anywhere else!
+
+                   To make sure you get as much out of these workshops as possible we’re keeping the the class sizes small. Each workshop is limited to 40 participants and will include hands-on exercises to get you started.</p>
+
+               </div>
+          </div>
+
+     </div>
+
+    <div class="mSlider__baseSlider ">
+        1
+    </div>
+
+
+     <div class="mSlider__baseSlider">
+333333333
+     </div>
+</div>
+
+
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/vconsole.min.js"></script>
+<!--<script type="text/javascript" src="js/index.js"></script>-->
+
+<script type="text/javascript">
+
+    var winW = window.innerWidth;
+    var winH = window.innerHeight;
+
+    var mSlider = document.querySelector('.mSlider');
+    var mSlider__baseSliders = document.querySelectorAll('.mSlider__baseSlider');
+    var scrollSlider__cont = document.querySelector('.scrollSlider__cont');
+
+    var basePage = []; //基础页面 dom
+    var action = 0;
+
+    var hasType = !1;
+//    for (var i = 0, l = mSlider__baseSliders.length; i < l; i++) {
+//        basePage.push(mSlider__baseSliders[i])
+//    }
+
+    var $mSlider__baseSliders = $('.mSlider__baseSlider');
+
+    $mSlider__baseSliders.each(function(){
+        basePage.push($(this))
+    });
+
+    console.log(basePage);
+
+    console.log(winW, winH);
+    //    console.log(mSlider);
+    //    console.log(mSlider__baseSliders);
+    //    console.log(scrollSlider__cont);
+
+
+    mSlider.style.width = winW + 'px';
+    mSlider.style.height = winH + 'px';
+
+    //    mSlider__baseSliders[0].style.height  = winH + 'px';
+
+    function getPage(event, page) {
+        return event.changedTouches ? event.changedTouches[0][page] : event[page];
+    }
+
+    var arrow
+            ,startX
+            ,startY
+            ,directionX
+            ,pageX
+            ,pageY
+            , offsetX
+            , offsetY
+            , x = 0
+            , y = 0
+            ,touchTime;
+
+    mSlider.addEventListener('touchstart', function (e) {
+        touchTime = new Date();
+//        touch = e.targetTouches[0];
+        console.clear();
+        offsetX = 0;
+        offsetY = 0;
+        pageX = 0
+        pageY = 0
+        directionX = 0;
+        startX = getPage(e,'pageX');
+        startY = getPage(e,'pageY');
+        console.log('startX:' + startX, 'startY:' + startY);
+        console.log('clientX :' + getPage(e,'clientX'), 'clientY:' + getPage(e,'clientY'));
+        console.log('screenX:' + getPage(e,'screenX'), 'screenY:' + getPage(e,'screenY'));
+
+        hasType = $mSlider__baseSliders.eq(action).hasClass('mSlider__scrollSlider');
+        console.log($mSlider__baseSliders.eq(action).scrollTop());
+        console.log('hasType:',hasType);
+    }, false);
+
+
+    mSlider.addEventListener('touchmove', function (e) {
+//
+//        if(!hasType){
+//            e.preventDefault();
+//        }
+//
+
+//        console.log(target,this);
+        //touch = e.targetTouches[0];
+
+        //pageX = getPage(e,'pageX')
+        //pageY = getPage(e,'pageY');
+//        console.log(x, y);
+    }, false);
+
+    mSlider.addEventListener('touchend', function (e) {
+        touchTime = new Date() - touchTime;
+        console.log(touchTime + 'ms');
+        offsetX = startX - getPage(e,'pageX');
+        offsetY = startY - getPage(e,'pageY');
+        console.log('offsetX:' + offsetX, 'offsetY:' + offsetY);
+
+        /* if(offsetX > 0){
+         arrow = '右'
+         }else if(offsetX < 0){
+         arrow = '左'
+         }else if(distance > 0){
+         arrow = '下'
+         }else if(distance < 0){
+         arrow = '上'
+         }*/
+        console.log('touchTime:',touchTime);
+//        if(touchTime > 200){
+//            console.log('1索引:',action);
+            if (offsetY > 0) {
+                arrow = '下滑';
+                action--;
+            } else if (offsetY < 0) {
+                arrow = '上滑';
+                action++;
+            }
+//            console.log('2索引:',action);
+//            console.log(arrow);
+            if (Math.abs(offsetY) > 200) {
+                console.log('切换页面');
+                if(action < 0){
+                    action = 0;
+                }else if(action > 2){
+                    action = 2;
+                }
+                console.log('3索引:',action);
+//                $mSlider__baseSliders.removeClass('visibility');
+//                $mSlider__baseSliders.eq(action).addClass('visibility');
+
+            }
+//        }
+
+//        console.log(arrow);
+    }, false);
+
+
+
+</script>
+</body>
+</html>
